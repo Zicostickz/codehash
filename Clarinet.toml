@@ -20,10 +20,6 @@ depends_on = []
 path = "contracts/template-license.clar"
 depends_on = []
 
-[contracts.template-registry]
-path = "contracts/template-registry.clar"
-depends_on = []
-
 [repl]
 costs_version = 2
 parser_version = 2
