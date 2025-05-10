@@ -302,16 +302,8 @@
         (template-rep (unwrap! (map-get? template-reputations { template-id: template-id })
           ERR-TEMPLATE-NOT-FOUND
         ))
-        (template-owner-optional (contract-call? MARKETPLACE-CONTRACT get-template-owner template-id))
       )
-      ;; Ensure we can get the template owner
-      (asserts! (is-ok template-owner-optional) ERR-TEMPLATE-NOT-FOUND)
-      (let (
-          (template-owner (unwrap-panic template-owner-optional))
-          (developer-rep (unwrap! (map-get? developer-reputations { developer: template-owner })
-            ERR-USER-NOT-FOUND
-          ))
-        )
+      (let ()
         ;; Update the review
         (map-set template-reviews {
           template-id: template-id,
@@ -327,13 +319,6 @@
           rating-count: (get rating-count template-rep),
           total-purchases: (get total-purchases template-rep),
           total-deployments: (get total-deployments template-rep),
-        })
-        ;; Update developer reputation
-        (map-set developer-reputations { developer: template-owner } {
-          total-rating: (+ (- (get total-rating developer-rep) previous-rating) rating),
-          rating-count: (get rating-count developer-rep),
-          total-templates: (get total-templates developer-rep),
-          total-sales: (get total-sales developer-rep),
         })
         (ok true)
       )

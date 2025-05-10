@@ -244,11 +244,6 @@
     (user principal)
   )
   (begin
-    ;; Check if license exists
-    (asserts! (map-get? licenses { license-id: license-id })
-      ERR-LICENSE-NOT-FOUND
-    )
-    ;; Check if user has a valid license
     (asserts! (has-valid-license license-id user) ERR-LICENSE-NOT-FOUND)
     ;; Update usage count if needed
     (asserts! (use-license license-id user) ERR-LICENSE-EXPIRED)
